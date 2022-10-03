@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/imagPerson"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/apolline"></de.hdodenhof.circleimageview.CircleImageView>
+    <TextView
+        android:id="@+id/txName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Text View"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:layout_toRightOf="@+id/imagPerson"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="8dp"
+        android:layout_marginStart="16dp"></TextView>
+    <TextView
+        android:id="@+id/txNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txName"
+        android:text="Text View"
+
+        android:layout_toRightOf="@+id/imagPerson"
+        android:layout_marginStart="16dp"
+        ></TextView>
+        <TextView
+            android:id="@+id/txEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Text View"
+            android:layout_below="@+id/txNumber"
+            android:layout_toRightOf="@+id/imagPerson"
+            android:layout_marginStart="16dp"></TextView>
+
+</RelativeLayout>
