@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -73,6 +74,29 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
         if (id==R.id.menuSearch){
             return true;
         }
+        switch (id){
+            case (R.id.menuSearch):
+                Toast.makeText(this, "Bạn chọn Search", Toast.LENGTH_SHORT).show();
+                break;
+            case (R.id.menuSort):
+                Toast.makeText(this, "Bạn chọn bộ lọc ", Toast.LENGTH_SHORT).show();
+                break;
+            case (R.id.tangdan):
+                Toast.makeText(this, "Bạn chọn tăng dần ", Toast.LENGTH_SHORT).show();
+                PersonAdapter.sort(people,1);
+                personAdapter.notifyDataSetChanged();
+                break;
+            case (R.id.giamdan):
+                Toast.makeText(this, "Bạn chọn giảm dần", Toast.LENGTH_SHORT).show();
+                PersonAdapter.sort(people,-1);
+                personAdapter.notifyDataSetChanged();
+                break;
+            case (R.id.deletesort):
+                Toast.makeText(this, "Bạn chọn xóa bộ lọc ", Toast.LENGTH_SHORT).show();
+                recyclerView.setAdapter(personAdapter);
+                personAdapter.notifyDataSetChanged();
+                break;
+        }
         return super.onOptionsItemSelected(item);
     }
 
@@ -97,4 +121,5 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
         });
         return true;
     }
+
 }

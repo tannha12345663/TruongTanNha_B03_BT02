@@ -13,6 +13,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Locale;
 import java.util.zip.Inflater;
@@ -106,5 +108,20 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
             }
         };
         return filter;
+    }
+
+
+    public static void sort(List<Person> sapxep, final int asc){
+        Collections.sort(sapxep, new Comparator<Person>() {
+            @Override
+            public int compare(Person t1, Person t2) {
+                int  n1,n2 ;
+                n1 = t1.getId();
+                n2 = t2.getId();
+                int s1 = n1;
+                int s2 = n2;
+                return s1> s2 ? asc:-asc;
+            }
+        });
     }
 }

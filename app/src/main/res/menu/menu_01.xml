@@ -12,5 +12,21 @@
         android:id="@+id/menuSort"
         android:title="Bộ Lọc"
         android:icon="@drawable/ic_baseline_sort_24"
-        app:showAsAction="always"></item>
+        app:showAsAction="always">
+        <menu>
+            <item
+                android:id="@+id/tangdan"
+                android:icon="@drawable/ic_baseline_arrow_upward_24"
+                android:title="Sắp xếp tăng dần" />
+            <item
+                android:id="@+id/giamdan"
+                android:icon="@drawable/ic_baseline_arrow_downward_24"
+                android:title="Sắp xếp giảm dần" />
+            <item
+                android:id="@+id/deletesort"
+                android:icon="@drawable/ic_baseline_remove_24"
+                android:title="Xóa bộ lọc" />
+        </menu>
+    </item>
+
 </menu>

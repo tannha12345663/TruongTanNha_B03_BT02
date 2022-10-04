@@ -58,7 +58,7 @@ public class App extends Application {
                 "(536)-393-6219",
                 "ceylancatalbas@example.com",
                 "Null"));
-        data.add(new Person(7,
+        data.add(new Person(8,
                 R.drawable.seraina,
                 "Seraina Henry",
                 "(077)-673-2231",
