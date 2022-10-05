@@ -34,15 +34,13 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         recyclerView=findViewById(R.id.rcPerson);
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this,RecyclerView.VERTICAL,false);
-        recyclerView.setLayoutManager(linearLayoutManager);
         people=new ArrayList<>();
         people=App.ininitPerson();
         personAdapter= new PersonAdapter(people,MainActivity.this);
         recyclerView.setAdapter(personAdapter);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        recyclerView.addItemDecoration(new DividerItemDecoration(this,LinearLayoutManager.VERTICAL));
         // Bắt buộc khai báo để set kiểu layout cho RecyleView
-
-
     }
 
 
@@ -100,26 +98,26 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_01,menu); // Khai báo hiển thị menu
-        MenuItem menuItem = menu.findItem(R.id.menuSearch);
-        SearchView searchView = (SearchView) menuItem.getActionView();
-        searchView.setMaxWidth(Integer.MAX_VALUE);
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                String searchStr= newText;
-                personAdapter.getFilter().filter(newText);
-                return false;
-            }
-        });
-        return true;
-    }
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        getMenuInflater().inflate(R.menu.menu_01,menu); // Khai báo hiển thị menu
+//        MenuItem menuItem = menu.findItem(R.id.menuSearch);
+//        SearchView searchView = (SearchView) menuItem.getActionView();
+//        searchView.setMaxWidth(Integer.MAX_VALUE);
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                String searchStr= newText;
+//                personAdapter.getFilter().filter(newText);
+//                return false;
+//            }
+//        });
+//        return true;
+//    }
 
 }

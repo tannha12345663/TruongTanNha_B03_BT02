@@ -11,7 +11,7 @@
         android:layout_alignParentTop="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:src="@drawable/apolline"></de.hdodenhof.circleimageview.CircleImageView>
+        android:src="@drawable/catalbas"></de.hdodenhof.circleimageview.CircleImageView>
     <TextView
         android:id="@+id/txName"
         android:layout_width="wrap_content"
