@@ -1,6 +1,6 @@
 package com.example.truongtannha_b03_bt02;
 
-public class Person implements Comparable<Person>{
+public class Person {
     int id;
     int image;
     String name;
@@ -65,10 +65,5 @@ public class Person implements Comparable<Person>{
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    @Override
-    public int compareTo(Person o) {
-        return 0;
     }
 }
