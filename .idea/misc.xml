@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/Lucky/AndroidStudioProjects/TruongTanNha_B03_BT02/app/src/main/res/drawable/ic_baseline_arrow_downward_24.xml" value="0.154" />
+        <entry key="..\:/Users/Lucky/AndroidStudioProjects/TruongTanNha_B03_BT02/app/src/main/res/drawable/ic_baseline_remove_24.xml" value="0.154" />
+        <entry key="..\:/Users/Lucky/AndroidStudioProjects/TruongTanNha_B03_BT02/app/src/main/res/layout/activity_info.xml" value="0.18229166666666666" />
         <entry key="..\:/Users/Lucky/AndroidStudioProjects/TruongTanNha_B03_BT02/app/src/main/res/layout/activity_main.xml" value="0.27870370370370373" />
         <entry key="..\:/Users/Lucky/AndroidStudioProjects/TruongTanNha_B03_BT02/app/src/main/res/layout/person_row.xml" value="0.27870370370370373" />
         <entry key="..\:/Users/Lucky/AndroidStudioProjects/TruongTanNha_B03_BT02/app/src/main/res/layout/select_item.xml" value="0.26296296296296295" />
