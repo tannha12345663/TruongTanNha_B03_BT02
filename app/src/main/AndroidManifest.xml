@@ -15,10 +15,14 @@
         android:theme="@style/Theme.TruongTanNha_B03_BT02"
         tools:targetApi="28">
         <activity
+            android:name=".AddEditActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

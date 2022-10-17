@@ -11,11 +11,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
     List<Person> people;
     PersonAdapter personAdapter;
     SearchView searchView;
-
+    FloatingActionButton floatingActionButton;
 
 
 
@@ -40,6 +44,16 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
         people=App.ininitPerson();
         personAdapter= new PersonAdapter(people,MainActivity.this);
         recyclerView.setAdapter(personAdapter);
+        floatingActionButton=findViewById(R.id.floatingActionButton);
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent();
+                intent=new Intent(MainActivity.this,AddEditActivity.class);
+                intent.putExtra("flag",1);
+                startActivity(intent);
+            }
+        });
         // Bắt buộc khai báo để set kiểu layout cho RecyleView
 
 
@@ -48,19 +62,23 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
 
     @Override
     public void onItemListener(@NonNull Person person) {
-        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
-        builder.setTitle("Contacts");
-        builder.setIcon(getDrawable(person.getImage()));
-        builder.setMessage(person.getName()+"\n"+person.getNumberphone());
-        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                dialogInterface.dismiss();
-                dialogInterface.cancel();
-            }
-        });
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
+//        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+//        builder.setTitle("Contacts");
+//        builder.setIcon(getDrawable(person.getImage()));
+//        builder.setMessage(person.getName()+"\n"+person.getNumberphone());
+//        builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                dialogInterface.dismiss();
+//                dialogInterface.cancel();
+//            }
+//        });
+//        AlertDialog alertDialog = builder.create();
+//        alertDialog.show();
+        InfoDialogBottomSheet dialog = new InfoDialogBottomSheet(MainActivity.this,person);
+        dialog.findView();
+        dialog.show();
+
     }
 
     @Override
@@ -83,18 +101,18 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
                 break;
             case (R.id.tangdan):
                 Toast.makeText(this, "Bạn chọn tăng dần ", Toast.LENGTH_SHORT).show();
-                PersonAdapter.sort(people,1);
-                personAdapter.notifyDataSetChanged();
+//                PersonAdapter.sort(people,1);
+//                personAdapter.notifyDataSetChanged();
                 break;
             case (R.id.giamdan):
                 Toast.makeText(this, "Bạn chọn giảm dần", Toast.LENGTH_SHORT).show();
-                PersonAdapter.sort(people,-1);
-                personAdapter.notifyDataSetChanged();
+//                PersonAdapter.sort(people,-1);
+//                personAdapter.notifyDataSetChanged();
                 break;
             case (R.id.deletesort):
                 Toast.makeText(this, "Bạn chọn xóa bộ lọc ", Toast.LENGTH_SHORT).show();
-                recyclerView.setAdapter(personAdapter);
-                personAdapter.notifyDataSetChanged();
+//                recyclerView.setAdapter(personAdapter);
+//                personAdapter.notifyDataSetChanged();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -114,8 +132,8 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                String searchStr= newText;
-                personAdapter.getFilter().filter(newText);
+//                String searchStr= newText;
+//                personAdapter.getFilter().filter(newText);
                 return false;
             }
         });
