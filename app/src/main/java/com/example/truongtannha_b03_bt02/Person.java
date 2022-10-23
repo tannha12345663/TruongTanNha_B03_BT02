@@ -1,22 +1,26 @@
 package com.example.truongtannha_b03_bt02;
 
-public class Person {
+import java.io.Serializable;
+
+public class Person implements Serializable {
     int id;
     int image;
-    String name;
+    String fname;
+    String lname;
     String numberphone;
     String email;
-    String description;
+    String birthday;
 
 
 
-    public Person(int id, int image, String name, String numberphone, String email, String description) {
+    public Person(int id, int image, String fname,String lname, String numberphone, String email, String birthday) {
         this.id = id;
         this.image=image;
-        this.name = name;
+        this.fname = fname;
+        this.lname=lname;
         this.numberphone = numberphone;
         this.email = email;
-        this.description = description;
+        this.birthday = birthday;
     }
 
     public int getId() {
@@ -35,12 +39,20 @@ public class Person {
         this.image = image;
     }
 
-    public String getName() {
-        return name;
+    public String getFname() {
+        return fname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setFname(String fname) {
+        this.fname = fname;
+    }
+
+    public String getLname() {
+        return lname;
+    }
+
+    public void setLname(String lname) {
+        this.lname = lname;
     }
 
     public String getNumberphone() {
@@ -59,11 +71,11 @@ public class Person {
         this.email = email;
     }
 
-    public String getDescription() {
-        return description;
+    public String getBirthday() {
+        return birthday;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
     }
 }

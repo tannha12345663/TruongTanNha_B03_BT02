@@ -43,7 +43,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
     public void onBindViewHolder(@NonNull PersonVH holder, int position) {
         Person person = peoples.get(position);
         holder.imagperson.setImageResource(person.getImage());
-        holder.txName.setText(person.getName());
+        holder.txName.setText(person.getFname());
         holder.txNumber.setText(person.getNumberphone());
         holder.txEmail.setText(person.getEmail());
         //Bắt sự kiện onClick Listen
@@ -91,7 +91,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
                     String searchStr=constraint.toString().toLowerCase();
                     List<Person> personList = new ArrayList<>();
                     for (Person person : getPeoplesFilter){
-                        if (person.getName().toLowerCase().contains(searchStr)||person.getNumberphone().toLowerCase().contains(searchStr)|| person.getNumberphone().toLowerCase().contains(searchStr)){
+                        if (person.getFname().toLowerCase().contains(searchStr)||person.getNumberphone().toLowerCase().contains(searchStr)|| person.getNumberphone().toLowerCase().contains(searchStr)){
                             personList.add(person);
                         }
                     }
@@ -123,5 +123,21 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
                 return s1> s2 ? asc:-asc;
             }
         });
+    }
+    public void addPerson(Person person){
+        peoples.add(person);
+        notifyDataSetChanged();
+    }
+    public void editPerson(Person person, int pos){
+        peoples.set(pos,person);
+        notifyDataSetChanged();
+    }
+    public void deletePerson(int pos){
+        peoples.remove(pos);
+        notifyDataSetChanged();
+    }
+    public void deletePerson(Person person){
+        peoples.remove(person);
+        notifyDataSetChanged();
     }
 }

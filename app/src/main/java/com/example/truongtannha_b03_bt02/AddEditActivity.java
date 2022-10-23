@@ -3,6 +3,7 @@ package com.example.truongtannha_b03_bt02;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,6 +18,7 @@ import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.Calendar;
+import java.util.Random;
 
 public class AddEditActivity extends AppCompatActivity {
     TextInputLayout tifName, tilName, tiEmail, tiPhone, tiBirthday;
@@ -28,7 +30,6 @@ public class AddEditActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_edit);
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tifName = findViewById(R.id.tilFname);
@@ -43,18 +44,19 @@ public class AddEditActivity extends AppCompatActivity {
         edPhone = findViewById(R.id.edPhone);
         edBirthday = findViewById(R.id.edBirthday);
 
-//        Intent intent = getIntent();
-//        flag = intent.getIntExtra("flag", 0);
-//        if(flag == 1){
-//            getSupportActionBar().setTitle(R.string.add);
-//        }else {
-//            getSupportActionBar().setTitle(R.string.edit);
-//            personEdit = (Person) intent.getSerializableExtra("contact");
-//            edfName.setText(personEdit.getName());
-//            edEmail.setText(personEdit.getEmail());
-//            edPhone.setText(personEdit.getNumberphone());
-////            edBirthday.setText(personEdit.getBirthday());
-//        }
+        Intent intent = getIntent();
+        flag = intent.getIntExtra("flag", 0);
+        if(flag == 1){
+            getSupportActionBar().setTitle("Add Contact");
+        }else {
+            getSupportActionBar().setTitle(R.string.edit);
+            personEdit = (Person) intent.getSerializableExtra("contact");
+            edfName.setText(personEdit.getFname());
+            edlName.setText(personEdit.getLname());
+            edEmail.setText(personEdit.getEmail());
+            edPhone.setText(personEdit.getNumberphone());
+//            edBirthday.setText(personEdit.getBirthday());
+        }
 
 
         edBirthday.setOnClickListener(view -> {
@@ -78,6 +80,62 @@ public class AddEditActivity extends AppCompatActivity {
     }
 
 
+    //Tạo Menu
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater= getMenuInflater();
+        menuInflater.inflate(R.menu.menu02,menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.mnSave){
+            if (edfName.getText().toString().isEmpty()
+                || edlName.getText().toString().isEmpty()
+                || edEmail.getText().toString().isEmpty()
+                || edPhone.getText().toString().isEmpty()
+                || edBirthday.getText().toString().isEmpty()){
+                tifName.setError("Not null");
+                tilName.setError("Not null");
+                tiEmail.setError("Not null");
+                tiPhone.setError("Not null");
+                tiBirthday.setError("Not null");
+                return false;
+            } else {
+                if (flag == 1){
+                    Person persons = new Person(new Random().nextInt(9999),
+                            0,
+                            edfName.getText().toString(),
+                            edlName.getText().toString(),
+                            edPhone.getText().toString(),
+                            edEmail.getText().toString(),
+                            edBirthday.getText().toString());
+                    Intent intent = new Intent();
+                    intent.putExtra("contact", persons);
+                    intent.putExtra("flag",1);
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }else {
+                    Person person = new Person(personEdit.getId(),
+                            0,
+                            edfName.getText().toString(),
+                            edlName.getText().toString(),
+                            edPhone.getText().toString(),
+                            edEmail.getText().toString(),
+                            edBirthday.getText().toString());
+
+                    Intent intent = new Intent();
+                    intent.putExtra("contact", person);
+                    intent.putExtra("flag",2);
+                    setResult(RESULT_OK,intent);
+                    finish();
+                }
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     public boolean onSupportNavigateUp() {

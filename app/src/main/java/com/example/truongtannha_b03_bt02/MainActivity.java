@@ -1,5 +1,9 @@
 package com.example.truongtannha_b03_bt02;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,8 +34,25 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
     PersonAdapter personAdapter;
     SearchView searchView;
     FloatingActionButton floatingActionButton;
+    int pos;
 
-
+    ActivityResultLauncher<Intent> mLauncher =registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode()==RESULT_OK) {
+                        if (result.getData().getIntExtra("flag", 0) == 1) {
+                            Person person = (Person) result.getData().getSerializableExtra("contact");
+                            personAdapter.addPerson(person);
+                        } else {
+                            Person person = (Person) result.getData().getSerializableExtra("contact");
+                            personAdapter.editPerson(person, pos);
+                        }
+                    }
+                }
+            }
+    );
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
                 Intent intent = new Intent();
                 intent=new Intent(MainActivity.this,AddEditActivity.class);
                 intent.putExtra("flag",1);
-                startActivity(intent);
+                mLauncher.launch(intent);
             }
         });
         // Bắt buộc khai báo để set kiểu layout cho RecyleView
@@ -75,7 +96,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
 //        });
 //        AlertDialog alertDialog = builder.create();
 //        alertDialog.show();
-        InfoDialogBottomSheet dialog = new InfoDialogBottomSheet(MainActivity.this,person);
+        InfoDialogBottomSheet dialog = new InfoDialogBottomSheet(MainActivity.this,person,mLauncher,personAdapter);
         dialog.findView();
         dialog.show();
 
