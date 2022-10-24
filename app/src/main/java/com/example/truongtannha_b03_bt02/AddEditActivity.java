@@ -119,7 +119,7 @@ public class AddEditActivity extends AppCompatActivity {
                     finish();
                 }else {
                     Person person = new Person(personEdit.getId(),
-                            0,
+                            personEdit.getImage(),
                             edfName.getText().toString(),
                             edlName.getText().toString(),
                             edPhone.getText().toString(),
