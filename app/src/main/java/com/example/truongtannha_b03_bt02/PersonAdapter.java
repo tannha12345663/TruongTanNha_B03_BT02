@@ -22,13 +22,14 @@ import java.util.zip.Inflater;
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> implements Filterable {
+    List<Person> peoplesFilter; // Tìm item
     List<Person> peoples;
     Listener listener;
-    List<Person> getPeoplesFilter; // Tìm item
+
     public PersonAdapter(List<Person> peoples,Listener listener) {
         this.peoples = peoples;
         this.listener=listener;
-        this.getPeoplesFilter=peoples;
+        this.peoplesFilter=peoples;
     }
 
 
@@ -41,7 +42,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
 
     @Override
     public void onBindViewHolder(@NonNull PersonVH holder, int position) {
-        Person person = peoples.get(position);
+        Person person = peoplesFilter.get(position);
         holder.imagperson.setImageResource(person.getImage());
         holder.txName.setText(person.getFname());
         holder.txNumber.setText(person.getNumberphone());
@@ -50,7 +51,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                listener.onItemListener(person);
+                listener.onItemListener(position,person);
             }
         });
     }
@@ -58,7 +59,7 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
 
     @Override
     public int getItemCount() {
-        return peoples.size();
+        return peoplesFilter.size();
     }
 
 
@@ -76,54 +77,44 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
         }
     }
     interface Listener{
-        void onItemListener(Person person);
+        void onItemListener(int pos,Person person);
     }
     @Override
     public Filter getFilter() {
-        Filter filter = new Filter() {
-            @Override
-            protected FilterResults performFiltering(CharSequence constraint) {
-                FilterResults filterResults = new FilterResults();
-                if (constraint==null|| constraint.length()==0){
-                    filterResults.values=getPeoplesFilter;
-                    filterResults.count= getPeoplesFilter.size();
-                }else {
-                    String searchStr=constraint.toString().toLowerCase();
-                    List<Person> personList = new ArrayList<>();
-                    for (Person person : getPeoplesFilter){
-                        if (person.getFname().toLowerCase().contains(searchStr)||person.getNumberphone().toLowerCase().contains(searchStr)|| person.getNumberphone().toLowerCase().contains(searchStr)){
-                            personList.add(person);
-                        }
+        return new PeoplesFilter();
+    }
+
+    private class PeoplesFilter extends Filter {
+        @Override
+        protected FilterResults performFiltering(CharSequence constraint) {
+            String charstring = constraint.toString();
+            if (charstring.isEmpty()){
+                peoplesFilter=peoples;
+            }else {
+                List<Person>filteredList = new ArrayList<>();
+                for (Person row : peoples){
+                    //Xét chuỗi phù hợp với ký tự đã nhập vào
+                    if (row.getFname().toLowerCase().contains(charstring.toLowerCase())
+                    ||row.getNumberphone().contains(charstring)
+                    ||row.getLname().contains(charstring)){
+                        filteredList.add(row);
                     }
-                    filterResults.values = personList;
-                    filterResults.count=personList.size();
                 }
-                return filterResults;
+                peoplesFilter = (ArrayList<Person>) filteredList;
             }
+            FilterResults filterResults = new FilterResults();
+            filterResults.values = peoplesFilter;
 
-            @Override
-            protected void publishResults(CharSequence charSequence, FilterResults filterResults) {
-                peoples = (List<Person>) filterResults.values;
-                notifyDataSetChanged();
-            }
-        };
-        return filter;
+            return filterResults;
+        }
+
+        @Override
+        protected void publishResults(CharSequence constraint, FilterResults results) {
+            peoplesFilter = (ArrayList<Person>) results.values;
+            notifyDataSetChanged();
+        }
     }
 
-
-    public static void sort(List<Person> sapxep, final int asc){
-        Collections.sort(sapxep, new Comparator<Person>() {
-            @Override
-            public int compare(Person t1, Person t2) {
-                int  n1,n2 ;
-                n1 = t1.getId();
-                n2 = t2.getId();
-                int s1 = n1;
-                int s2 = n2;
-                return s1> s2 ? asc:-asc;
-            }
-        });
-    }
     public void addPerson(Person person){
         peoples.add(person);
         notifyDataSetChanged();
@@ -140,4 +131,6 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
         peoples.remove(person);
         notifyDataSetChanged();
     }
+
+
 }

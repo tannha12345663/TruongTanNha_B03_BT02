@@ -26,6 +26,7 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.Listener {
@@ -79,11 +80,9 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
 
 
     }
-
-
     @Override
-    public void onItemListener(@NonNull Person person) {
-//        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
+    public void onItemListener(int pos, Person person) {
+        //        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
 //        builder.setTitle("Contacts");
 //        builder.setIcon(getDrawable(person.getImage()));
 //        builder.setMessage(person.getName()+"\n"+person.getNumberphone());
@@ -99,7 +98,6 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
         InfoDialogBottomSheet dialog = new InfoDialogBottomSheet(MainActivity.this,person,mLauncher,personAdapter);
         dialog.findView();
         dialog.show();
-
     }
 
     @Override
@@ -110,55 +108,51 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
+        if (id==R.id.tangdan){
+            Collections.sort(people);
+            personAdapter.notifyDataSetChanged();
+        }
+        if (id==R.id.giamdan){
+            Collections.
+        }
         if (id==R.id.menuSearch){
+
             return true;
         }
-        switch (id){
-            case (R.id.menuSearch):
-                Toast.makeText(this, "Bạn chọn Search", Toast.LENGTH_SHORT).show();
-                break;
-            case (R.id.menuSort):
-                Toast.makeText(this, "Bạn chọn bộ lọc ", Toast.LENGTH_SHORT).show();
-                break;
-            case (R.id.tangdan):
-                Toast.makeText(this, "Bạn chọn tăng dần ", Toast.LENGTH_SHORT).show();
-//                PersonAdapter.sort(people,1);
-//                personAdapter.notifyDataSetChanged();
-                break;
-            case (R.id.giamdan):
-                Toast.makeText(this, "Bạn chọn giảm dần", Toast.LENGTH_SHORT).show();
-//                PersonAdapter.sort(people,-1);
-//                personAdapter.notifyDataSetChanged();
-                break;
-            case (R.id.deletesort):
-                Toast.makeText(this, "Bạn chọn xóa bộ lọc ", Toast.LENGTH_SHORT).show();
-//                recyclerView.setAdapter(personAdapter);
-//                personAdapter.notifyDataSetChanged();
-                break;
-        }
         return super.onOptionsItemSelected(item);
-    }
+
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_01,menu); // Khai báo hiển thị menu
         MenuItem menuItem = menu.findItem(R.id.menuSearch);
+
         SearchView searchView = (SearchView) menuItem.getActionView();
         searchView.setMaxWidth(Integer.MAX_VALUE);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
+                //Kỹ thuật tìm chính xác
+                personAdapter.getFilter().filter(query);
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
-//                String searchStr= newText;
-//                personAdapter.getFilter().filter(newText);
+                //Kỹ thuật tìm gần đúng
+                personAdapter.getFilter().filter(newText);
+                if (newText.isEmpty()){
+                    floatingActionButton.setVisibility(View.VISIBLE);
+                }
+                else {
+                    floatingActionButton.setVisibility(View.INVISIBLE);
+                }
                 return false;
             }
         });
         return true;
     }
+
 
 }

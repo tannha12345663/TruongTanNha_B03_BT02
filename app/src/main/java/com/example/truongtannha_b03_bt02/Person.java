@@ -2,7 +2,7 @@ package com.example.truongtannha_b03_bt02;
 
 import java.io.Serializable;
 
-public class Person implements Serializable {
+public class Person implements Serializable ,Comparable<Person>{
     int id;
     int image;
     String fname;
@@ -77,5 +77,22 @@ public class Person implements Serializable {
 
     public void setBirthday(String birthday) {
         this.birthday = birthday;
+    }
+
+    @Override
+    public int compareTo(Person o) {
+        if (fname.compareToIgnoreCase(o.fname)==0){
+            return lname.compareToIgnoreCase(o.lname);
+        }
+        return fname.compareToIgnoreCase(o.fname);
+    }
+    public String toString(){
+        return "Peoples{" +
+                "id" + id +
+                "lName" + lname+
+                "image"+image+
+                "phone"+ numberphone+
+                "email"+email+
+                "birthday"+birthday +'\''+ "}";
     }
 }
