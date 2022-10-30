@@ -27,6 +27,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements PersonAdapter.Listener {
@@ -35,7 +36,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
     PersonAdapter personAdapter;
     SearchView searchView;
     FloatingActionButton floatingActionButton;
-    int pos;
+    int position;
 
     ActivityResultLauncher<Intent> mLauncher =registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -46,9 +47,9 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
                         if (result.getData().getIntExtra("flag", 0) == 1) {
                             Person person = (Person) result.getData().getSerializableExtra("contact");
                             personAdapter.addPerson(person);
-                        } else {
+                        } else if(result.getData().getIntExtra("flag", 0) == 2){
                             Person person = (Person) result.getData().getSerializableExtra("contact");
-                            personAdapter.editPerson(person, pos);
+                            personAdapter.editPerson(person,position);
                         }
                     }
                 }
@@ -82,6 +83,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
     }
     @Override
     public void onItemListener(int pos, Person person) {
+        position=pos;
         //        AlertDialog.Builder builder=new AlertDialog.Builder(MainActivity.this);
 //        builder.setTitle("Contacts");
 //        builder.setIcon(getDrawable(person.getImage()));
@@ -95,6 +97,7 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
 //        });
 //        AlertDialog alertDialog = builder.create();
 //        alertDialog.show();
+
         InfoDialogBottomSheet dialog = new InfoDialogBottomSheet(MainActivity.this,person,mLauncher,personAdapter);
         dialog.findView();
         dialog.show();
@@ -113,11 +116,13 @@ public class MainActivity extends AppCompatActivity implements PersonAdapter.Lis
             personAdapter.notifyDataSetChanged();
         }
         if (id==R.id.giamdan){
-            Collections.
-        }
-        if (id==R.id.menuSearch){
-
-            return true;
+            Collections.sort(people, new Comparator<Person>() {
+                @Override
+                public int compare(Person o1, Person o2) {
+                    return o2.getFname().compareTo(o1.getFname());
+                }
+            });
+            personAdapter.notifyDataSetChanged();
         }
         return super.onOptionsItemSelected(item);
 

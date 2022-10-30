@@ -119,8 +119,8 @@ public class PersonAdapter extends RecyclerView.Adapter<PersonAdapter.PersonVH> 
         peoples.add(person);
         notifyDataSetChanged();
     }
-    public void editPerson(Person person, int pos){
-        peoples.set(pos,person);
+    public void editPerson(Person person,int pos){
+        peoples.set(pos, person);
         notifyDataSetChanged();
     }
     public void deletePerson(int pos){

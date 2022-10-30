@@ -55,7 +55,7 @@ public class AddEditActivity extends AppCompatActivity {
             edlName.setText(personEdit.getLname());
             edEmail.setText(personEdit.getEmail());
             edPhone.setText(personEdit.getNumberphone());
-//            edBirthday.setText(personEdit.getBirthday());
+            edBirthday.setText(personEdit.getBirthday());
         }
 
 
